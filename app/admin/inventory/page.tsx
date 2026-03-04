@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAdminContext } from '@/context/AdminContext'
 import { Product, getCategoryById } from '@/lib/data'
 import Link from 'next/link'
@@ -18,6 +18,14 @@ export default function AdminInventory() {
   const [sortField, setSortField] = useState<keyof Product>('name')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [lastAddedId, setLastAddedId] = useState<string | null>(null)
+  const [flashingId, setFlashingId] = useState<string | null>(null)
+  const newRowRef = useRef<HTMLTableRowElement | null>(null)
+
+  useEffect(() => {
+    if (lastAddedId && newRowRef.current) {
+      newRowRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }, [lastAddedId])
 
   const topCategories = categories.filter(c => !c.parentId)
 
@@ -66,6 +74,8 @@ export default function AdminInventory() {
       isBestSeller: false, isNewProduct: true,
     })
     setLastAddedId(id)
+    setFlashingId(id)
+    setTimeout(() => setFlashingId(null), 2000)
     showToast('New product row added -- click cells to edit')
   }
 
@@ -119,7 +129,7 @@ export default function AdminInventory() {
 
       {/* Scrollable table */}
       <div style={{ overflowX: 'auto', paddingBottom: '1rem' }}>
-        <div style={{ minWidth: '900px', padding: '0 1rem' }}>
+        <div style={{ minWidth: '1300px', padding: '0 1rem' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', background: '#111', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)' }}>
             <thead>
               <tr>
@@ -131,6 +141,8 @@ export default function AdminInventory() {
                   { label: 'COMPETITOR $', field: 'competitorPrice' as keyof Product },
                   { label: 'STOCK', field: 'stockCount' as keyof Product },
                   { label: 'KEYWORDS', field: 'keywords' as keyof Product },
+                  { label: 'IMAGE URL', field: 'imageUrl' as keyof Product },
+                  { label: 'VIDEO URL', field: 'videoUrl' as keyof Product },
                   { label: 'ACTIONS', field: 'id' as keyof Product },
                 ].map((col, i) => (
                   <th key={i} onClick={() => col.label !== 'ACTIONS' && handleSort(col.field)} style={thStyle}>
@@ -143,7 +155,8 @@ export default function AdminInventory() {
               {displayRows.map((p, rowIdx) => {
                 const cat = getCategoryById(p.categoryId)
                 const isEditing = (field: keyof Product) => editingCell?.id === p.id && editingCell?.field === field
-                const rowBg = rowIdx % 2 === 0 ? '#111' : '#0d0d0d'
+                const isFlashing = flashingId === p.id
+                const rowBg = isFlashing ? 'rgba(198,0,0,0.18)' : rowIdx % 2 === 0 ? '#111' : '#0d0d0d'
 
                 function EditableCell({ field, value }: { field: keyof Product; value: unknown }) {
                   return isEditing(field) ? (
@@ -167,7 +180,8 @@ export default function AdminInventory() {
                 }
 
                 return (
-                  <tr key={p.id} style={{ background: rowBg, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <tr key={p.id} ref={p.id === lastAddedId ? newRowRef : undefined}
+                    style={{ background: rowBg, borderBottom: '1px solid rgba(255,255,255,0.04)', transition: 'background 0.6s' }}>
                     <td style={{ ...cellStyle, color: 'rgba(255,255,255,0.3)', width: '40px' }}>{rowIdx + 1}</td>
                     <td style={{ ...cellStyle, minWidth: '180px' }}><EditableCell field="name" value={p.name} /></td>
                     <td style={{ ...cellStyle, minWidth: '130px' }}>
@@ -205,6 +219,12 @@ export default function AdminInventory() {
                     <td style={cellStyle}><EditableCell field="stockCount" value={p.stockCount} /></td>
                     <td style={{ ...cellStyle, minWidth: '140px' }}>
                       <EditableCell field="keywords" value={Array.isArray(p.keywords) ? p.keywords.join(', ') : p.keywords} />
+                    </td>
+                    <td style={{ ...cellStyle, minWidth: '200px' }}>
+                      <EditableCell field="imageUrl" value={p.imageUrl ?? ''} />
+                    </td>
+                    <td style={{ ...cellStyle, minWidth: '200px' }}>
+                      <EditableCell field="videoUrl" value={p.videoUrl ?? ''} />
                     </td>
                     <td style={cellStyle}>
                       <button onClick={() => { if (window.confirm(`Delete "${p.name}"?`)) { deleteProduct(p.id); showToast('Product deleted') } }}
