@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAdminContext } from '@/context/AdminContext'
 import { Product, getCategoryById } from '@/lib/data'
 import Link from 'next/link'
+import MediaManager from '@/components/admin/MediaManager'
 
 type EditingCell = { id: string; field: keyof Product } | null
 
@@ -19,6 +20,8 @@ export default function AdminInventory() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [lastAddedId, setLastAddedId] = useState<string | null>(null)
   const [flashingId, setFlashingId] = useState<string | null>(null)
+  const [mediaProductId, setMediaProductId] = useState<string | null>(null)
+  const mediaProduct = mediaProductId ? products.find(p => p.id === mediaProductId) ?? null : null
   const newRowRef = useRef<HTMLTableRowElement | null>(null)
 
   useEffect(() => {
@@ -141,8 +144,7 @@ export default function AdminInventory() {
                   { label: 'COMPETITOR $', field: 'competitorPrice' as keyof Product },
                   { label: 'STOCK', field: 'stockCount' as keyof Product },
                   { label: 'KEYWORDS', field: 'keywords' as keyof Product },
-                  { label: 'IMAGE URL', field: 'imageUrl' as keyof Product },
-                  { label: 'VIDEO URL', field: 'videoUrl' as keyof Product },
+                  { label: 'MEDIA', field: 'media' as keyof Product },
                   { label: 'ACTIONS', field: 'id' as keyof Product },
                 ].map((col, i) => (
                   <th key={i} onClick={() => col.label !== 'ACTIONS' && handleSort(col.field)} style={thStyle}>
@@ -220,11 +222,14 @@ export default function AdminInventory() {
                     <td style={{ ...cellStyle, minWidth: '140px' }}>
                       <EditableCell field="keywords" value={Array.isArray(p.keywords) ? p.keywords.join(', ') : p.keywords} />
                     </td>
-                    <td style={{ ...cellStyle, minWidth: '200px' }}>
-                      <EditableCell field="imageUrl" value={p.imageUrl ?? ''} />
-                    </td>
-                    <td style={{ ...cellStyle, minWidth: '200px' }}>
-                      <EditableCell field="videoUrl" value={p.videoUrl ?? ''} />
+                    <td style={cellStyle}>
+                      <button onClick={() => setMediaProductId(p.id)} style={{
+                        background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)',
+                        color: '#fff', borderRadius: '6px', padding: '0.25rem 0.6rem',
+                        cursor: 'pointer', fontSize: '0.75rem', whiteSpace: 'nowrap',
+                      }}>
+                        {p.media?.length ? `${p.media.length} item${p.media.length !== 1 ? 's' : ''}` : '+ Add'}
+                      </button>
                     </td>
                     <td style={cellStyle}>
                       <button onClick={() => { if (window.confirm(`Delete "${p.name}"?`)) { deleteProduct(p.id); showToast('Product deleted') } }}
@@ -241,6 +246,14 @@ export default function AdminInventory() {
       </div>
 
       <style>{`@keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }`}</style>
+
+      {mediaProduct && (
+        <MediaManager
+          product={mediaProduct}
+          onUpdate={media => updateProduct(mediaProduct.id, { media })}
+          onClose={() => setMediaProductId(null)}
+        />
+      )}
     </div>
   )
 }

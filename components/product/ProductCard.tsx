@@ -11,7 +11,8 @@ export default function ProductCard({ product }: { product: Product }) {
   const [added, setAdded] = useState(false)
   const { addItem, openDrawer } = useCartContext()
   const category = getCategoryById(product.categoryId)
-  const imgSrc = product.imageUrl || (category ? getPlaceholderImage(category, product.name) : '')
+  const firstImage = product.media?.find(m => m.type === 'image')?.url
+  const imgSrc = firstImage || (category ? getPlaceholderImage(category, product.name) : '')
 
   function handleAdd(e: React.MouseEvent) {
     e.preventDefault()

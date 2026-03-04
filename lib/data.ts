@@ -1,3 +1,8 @@
+export type MediaItem = {
+  type: 'image' | 'video'
+  url: string
+}
+
 export type Category = {
   id: string
   slug: string
@@ -17,10 +22,9 @@ export type Product = {
   stockCount: number
   isBestSeller: boolean
   isNewProduct: boolean
-  videoUrl?: string
   competitorPrice?: number
   metaDescription?: string
-  imageUrl?: string
+  media?: MediaItem[]
 }
 
 export type Promotion = {
@@ -56,7 +60,7 @@ export const products: Product[] = [
     keywords: ['fire', 'matches', 'waterproof', 'vault'],
     stockCount: 47, isBestSeller: false, isNewProduct: true, competitorPrice: 8.99,
     metaDescription: 'Waterproof match vault for pocket survival kits.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PXL_20260207_160706827.MP_-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PXL_20260207_160706827.MP_-300x300.jpg' }],
   },
   {
     id: '2', slug: 'pocket-folding-saw-130', name: 'Pocket Folding Saw (130mm)',
@@ -64,9 +68,11 @@ export const products: Product[] = [
     description: 'Aggressive TiN-coated blade tackles branches up to 3 inches. Folds safely into a compact package.',
     keywords: ['saw', 'cutting', 'folding', 'survival'],
     stockCount: 23, isBestSeller: false, isNewProduct: true, competitorPrice: 22.50,
-    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     metaDescription: '130mm folding pocket saw for field use.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PXL_20260207_161018062.MP_-300x300.jpg',
+    media: [
+      { type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PXL_20260207_161018062.MP_-300x300.jpg' },
+      { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+    ],
   },
   {
     id: '3', slug: 'pocket-folding-saw-95', name: 'Pocket Folding Saw (95mm)',
@@ -75,7 +81,7 @@ export const products: Product[] = [
     keywords: ['saw', 'cutting', 'folding', 'compact'],
     stockCount: 31, isBestSeller: false, isNewProduct: true, competitorPrice: 10.99,
     metaDescription: '95mm compact folding pocket saw.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/pocket-folding-saw-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/pocket-folding-saw-01-300x300.webp' }],
   },
   {
     id: '4', slug: 'hex-bit-ratchet-combo', name: 'Hex Bit Ratchet Combo',
@@ -84,7 +90,7 @@ export const products: Product[] = [
     keywords: ['ratchet', 'hex', 'repair', 'tool'],
     stockCount: 18, isBestSeller: false, isNewProduct: true, competitorPrice: 15.99,
     metaDescription: 'Compact hex bit ratchet for field repairs.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/hex-ratchet-combo-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/hex-ratchet-combo-01-300x300.webp' }],
   },
   {
     id: '5', slug: 'caliper-card', name: 'Caliper Card',
@@ -93,7 +99,7 @@ export const products: Product[] = [
     keywords: ['caliper', 'measure', 'card', 'edc'],
     stockCount: 55, isBestSeller: false, isNewProduct: true, competitorPrice: 9.99,
     metaDescription: 'Pocket-sized stainless caliper card.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/caliper-card-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/caliper-card-01-300x300.webp' }],
   },
   {
     id: '6', slug: 'folding-butter-knife', name: 'Folding Butter Knife',
@@ -102,7 +108,7 @@ export const products: Product[] = [
     keywords: ['knife', 'utensil', 'food', 'folding'],
     stockCount: 80, isBestSeller: false, isNewProduct: true, competitorPrice: 4.50,
     metaDescription: 'Compact folding butter knife for field meals.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/folding-butter-knife-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/folding-butter-knife-01-300x300.webp' }],
   },
   {
     id: '7', slug: 'braided-wire-saw', name: 'Braided Wire Saw',
@@ -111,7 +117,7 @@ export const products: Product[] = [
     keywords: ['saw', 'wire', 'survival', 'cutting'],
     stockCount: 62, isBestSeller: false, isNewProduct: true, competitorPrice: 7.99,
     metaDescription: 'High-tensile braided wire saw for survival use.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/braided-wire-saw-01-1-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/braided-wire-saw-01-1-300x300.webp' }],
   },
   {
     id: '8', slug: 'sidekick-salve', name: 'Sidekick Salve',
@@ -120,7 +126,7 @@ export const products: Product[] = [
     keywords: ['salve', 'healing', 'first-aid', 'skin'],
     stockCount: 34, isBestSeller: false, isNewProduct: true, competitorPrice: 8.99,
     metaDescription: 'Natural healing salve for field first aid.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PocKit-Survival-Sidekick-Salve-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PocKit-Survival-Sidekick-Salve-300x300.jpg' }],
   },
   {
     id: '9', slug: 'covert-safety-pin', name: 'Covert Safety Pin',
@@ -129,7 +135,7 @@ export const products: Product[] = [
     keywords: ['safety-pin', 'repair', 'fasten', 'edc'],
     stockCount: 120, isBestSeller: false, isNewProduct: true, competitorPrice: 2.99,
     metaDescription: 'Heavy-duty stainless covert safety pin.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/covert-safety-pin-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/covert-safety-pin-01-300x300.webp' }],
   },
   {
     id: '10', slug: 'zorro-lighter-polished', name: 'Zorro 588 Brass Lighter (Polished)',
@@ -138,7 +144,7 @@ export const products: Product[] = [
     keywords: ['lighter', 'fire', 'brass', 'windproof'],
     stockCount: 29, isBestSeller: false, isNewProduct: true, competitorPrice: 24.99,
     metaDescription: 'Polished brass windproof butane lighter.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2025/11/zerro-mini-punk-polished-01-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2025/11/zerro-mini-punk-polished-01-300x300.jpg' }],
   },
   {
     id: '11', slug: 'zorro-lighter-brushed', name: 'Zorro 588 Brass Lighter (Brushed)',
@@ -147,7 +153,7 @@ export const products: Product[] = [
     keywords: ['lighter', 'fire', 'brass', 'brushed'],
     stockCount: 17, isBestSeller: false, isNewProduct: true, competitorPrice: 24.99,
     metaDescription: 'Brushed brass windproof butane lighter.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2025/10/PXL_20251016_150242933-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2025/10/PXL_20251016_150242933-300x300.jpg' }],
   },
   {
     id: '12', slug: 'fire-blow-tube-xl', name: 'Fire Blow Tube XL',
@@ -156,7 +162,7 @@ export const products: Product[] = [
     keywords: ['fire', 'blow', 'tube', 'tinder'],
     stockCount: 43, isBestSeller: false, isNewProduct: true, competitorPrice: 6.99,
     metaDescription: 'Extended collapsible fire blow tube.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PXL_20260203_154215721.MP2_-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/PXL_20260203_154215721.MP2_-300x300.jpg' }],
   },
   {
     id: '13', slug: 'safety-pin-large', name: 'Safety Pin Large',
@@ -165,7 +171,7 @@ export const products: Product[] = [
     keywords: ['safety-pin', 'repair', 'consumable'],
     stockCount: 200, isBestSeller: true, isNewProduct: false, competitorPrice: 1.99,
     metaDescription: 'Durable large safety pin for gear and field repairs.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/large-bronze-safety-pin-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/large-bronze-safety-pin-01-300x300.webp' }],
   },
   {
     id: '14', slug: 'folding-spoon', name: 'Folding Spoon',
@@ -174,7 +180,7 @@ export const products: Product[] = [
     keywords: ['utensil', 'spoon', 'folding', 'lightweight'],
     stockCount: 76, isBestSeller: true, isNewProduct: false, competitorPrice: 5.99,
     metaDescription: 'Compact folding spoon for field meals.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_143502698.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_143502698.jpg' }],
   },
   {
     id: '15', slug: 'led-photon-micro-light', name: 'LED Photon Micro-Light',
@@ -183,7 +189,7 @@ export const products: Product[] = [
     keywords: ['light', 'led', 'micro', 'keychain'],
     stockCount: 89, isBestSeller: true, isNewProduct: false, competitorPrice: 4.99,
     metaDescription: 'Ultra-compact waterproof LED keychain light.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_143107492-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_143107492-300x300.jpg' }],
   },
   {
     id: '16', slug: 'folding-fork', name: 'Folding Fork',
@@ -192,7 +198,7 @@ export const products: Product[] = [
     keywords: ['utensil', 'fork', 'folding', 'lightweight'],
     stockCount: 71, isBestSeller: true, isNewProduct: false, competitorPrice: 5.99,
     metaDescription: 'Compact folding fork for field meals.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_142832130-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_142832130-300x300.jpg' }],
   },
   {
     id: '17', slug: 'mini-permanent-marker', name: 'Mini Permanent Marker',
@@ -201,7 +207,7 @@ export const products: Product[] = [
     keywords: ['marker', 'write', 'waterproof', 'edc'],
     stockCount: 150, isBestSeller: true, isNewProduct: false, competitorPrice: 2.49,
     metaDescription: 'Waterproof mini permanent marker for EDC.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_141015829-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_141015829-300x300.jpg' }],
   },
   {
     id: '18', slug: 'spice-tubes-5ml', name: 'Spice Tubes 5ml',
@@ -210,7 +216,7 @@ export const products: Product[] = [
     keywords: ['container', 'tube', 'storage', 'waterproof'],
     stockCount: 95, isBestSeller: true, isNewProduct: false, competitorPrice: 2.99,
     metaDescription: 'Watertight 5ml tubes for spices and small items.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240627_135736663-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240627_135736663-300x300.jpg' }],
   },
   {
     id: '19', slug: 'pockit-survival-tin', name: 'PocKit Survival Tin',
@@ -219,7 +225,7 @@ export const products: Product[] = [
     keywords: ['tin', 'container', 'kit', 'storage'],
     stockCount: 110, isBestSeller: true, isNewProduct: false, competitorPrice: 5.99,
     metaDescription: 'The original PocKit hinged survival tin.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/pockit-survival-tin-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/pockit-survival-tin-01-300x300.webp' }],
   },
   {
     id: '20', slug: 'ranger-bands-x5', name: 'Ranger Bands x5',
@@ -228,7 +234,7 @@ export const products: Product[] = [
     keywords: ['rubber-band', 'ranger', 'secure', 'versatile'],
     stockCount: 180, isBestSeller: true, isNewProduct: false, competitorPrice: 3.99,
     metaDescription: '5-pack heavy-duty rubber ranger bands.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2026/02/ranger-bands-01-300x300.webp',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2026/02/ranger-bands-01-300x300.webp' }],
   },
   {
     id: '21', slug: 'fire-blow-tube', name: 'Fire Blow Tube',
@@ -237,7 +243,7 @@ export const products: Product[] = [
     keywords: ['fire', 'blow', 'tinder', 'compact'],
     stockCount: 58, isBestSeller: true, isNewProduct: false, competitorPrice: 6.50,
     metaDescription: 'Compact 5-inch fire blow tube.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_142853338-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_142853338-300x300.jpg' }],
   },
   {
     id: '22', slug: 'fire-picks-x5', name: 'Fire Picks x5',
@@ -246,7 +252,7 @@ export const products: Product[] = [
     keywords: ['fire', 'tinder', 'picks', 'wax'],
     stockCount: 145, isBestSeller: true, isNewProduct: false, competitorPrice: 3.99,
     metaDescription: '5-pack waxed hemp fire picks.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_141918379.MP_-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_141918379.MP_-300x300.jpg' }],
   },
   {
     id: '23', slug: 'instant-towels-x3', name: 'Instant Towels x3',
@@ -255,7 +261,7 @@ export const products: Product[] = [
     keywords: ['towel', 'compress', 'hygiene', 'lightweight'],
     stockCount: 200, isBestSeller: true, isNewProduct: false, competitorPrice: 2.99,
     metaDescription: '3-pack compressed reusable coin towels.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_143045787-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240621_143045787-300x300.jpg' }],
   },
   {
     id: '24', slug: 'glow-sticks-mini-5pack', name: 'Glow Sticks Mini 5-Pack',
@@ -264,7 +270,7 @@ export const products: Product[] = [
     keywords: ['glow', 'light', 'signal', 'emergency'],
     stockCount: 130, isBestSeller: true, isNewProduct: false, competitorPrice: 3.49,
     metaDescription: '5-pack mini 8-hour glow sticks.',
-    imageUrl: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240610_203858814.MP2_-300x300.jpg',
+    media: [{ type: 'image', url: 'https://pockitsurvival.com/wp-content/uploads/2024/06/PXL_20240610_203858814.MP2_-300x300.jpg' }],
   },
 ]
 
@@ -310,4 +316,13 @@ export function getBestSellers(limit = 12): Product[] {
 
 export function getNewProducts(limit = 12): Product[] {
   return products.filter(p => p.isNewProduct).slice(0, limit)
+}
+
+export function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
+  return m ? m[1] : null
+}
+
+export function isYouTubeUrl(url: string): boolean {
+  return /youtube\.com|youtu\.be/.test(url)
 }
