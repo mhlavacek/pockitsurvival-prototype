@@ -197,8 +197,8 @@ export default function AdminInventory() {
                           title="Refresh competitor price (mock -- real impl queries price API)"
                           style={{ background: 'none', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.5)', borderRadius: '50%', width: '22px', height: '22px', cursor: 'pointer', fontSize: '0.65rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {refreshing === p.id ? (
-                            <span style={{ animation: 'spin 0.8s linear infinite', display: 'inline-block' }}>&#8635;</span>
-                          ) : '&#8635;'}
+                            <span style={{ animation: 'spin 0.8s linear infinite', display: 'inline-block' }}>{'\u21BB'}</span>
+                          ) : '\u21BB'}
                         </button>
                       </div>
                     </td>
