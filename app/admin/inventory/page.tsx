@@ -17,6 +17,7 @@ export default function AdminInventory() {
   const [refreshing, setRefreshing] = useState<string | null>(null)
   const [sortField, setSortField] = useState<keyof Product>('name')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
+  const [lastAddedId, setLastAddedId] = useState<string | null>(null)
 
   const topCategories = categories.filter(c => !c.parentId)
 
@@ -64,6 +65,7 @@ export default function AdminInventory() {
       description: '', keywords: [], stockCount: 0,
       isBestSeller: false, isNewProduct: true,
     })
+    setLastAddedId(id)
     showToast('New product row added -- click cells to edit')
   }
 
@@ -73,6 +75,8 @@ export default function AdminInventory() {
     const cmp = String(av).localeCompare(String(bv), undefined, { numeric: true })
     return sortDir === 'asc' ? cmp : -cmp
   })
+  const pinnedRow = lastAddedId ? sorted.find(p => p.id === lastAddedId) : null
+  const displayRows = pinnedRow ? [pinnedRow, ...sorted.filter(p => p.id !== lastAddedId)] : sorted
 
   const cellStyle: React.CSSProperties = {
     padding: '0.6rem 0.75rem', borderRight: '1px solid rgba(255,255,255,0.05)',
@@ -136,7 +140,7 @@ export default function AdminInventory() {
               </tr>
             </thead>
             <tbody>
-              {sorted.map((p, rowIdx) => {
+              {displayRows.map((p, rowIdx) => {
                 const cat = getCategoryById(p.categoryId)
                 const isEditing = (field: keyof Product) => editingCell?.id === p.id && editingCell?.field === field
                 const rowBg = rowIdx % 2 === 0 ? '#111' : '#0d0d0d'
